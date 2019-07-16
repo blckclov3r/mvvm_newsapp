@@ -18,8 +18,10 @@
         <ImageView
             android:id="@+id/news_imageView"
             android:layout_width="match_parent"
+            android:transitionName="news_image"
             android:scaleType="centerCrop"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:layout_alignBottom="@id/news_imageView"

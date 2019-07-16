@@ -3,6 +3,7 @@ package com.example.newsapp_mvvm.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +21,9 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -95,7 +99,12 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapt
         Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
         intent.putExtra("articles", articles);
         intent.putExtra("source", articles.getSource().getName());
-        startActivity(intent);
+        Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                MainActivity.this,
+                pair
+        );
+        startActivity(intent, optionsCompat.toBundle());
     }
 
     @Override
