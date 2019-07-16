@@ -99,7 +99,7 @@ public class ApiClient {
                 Response response = chain.proceed(chain.request());
 
                 CacheControl cacheControl = new CacheControl.Builder()
-                        .maxAge(5, TimeUnit.MINUTES)
+                        .maxAge(5, TimeUnit.SECONDS)
                         .build();
 
                 return response.newBuilder()

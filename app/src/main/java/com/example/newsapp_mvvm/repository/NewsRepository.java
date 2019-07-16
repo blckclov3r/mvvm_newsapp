@@ -8,6 +8,7 @@ import com.example.newsapp_mvvm.api.ApiInterface;
 import com.example.newsapp_mvvm.api.NewsListCallback;
 import com.example.newsapp_mvvm.models.Articles;
 import com.example.newsapp_mvvm.models.News;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -27,51 +28,65 @@ public class NewsRepository {
     private static NewsRepository instance = null;
     private NewsListCallback mNewsListCallback = null;
 
-    public synchronized static NewsRepository getInstance(){
-        if(instance == null){
+    public synchronized static NewsRepository getInstance() {
+        if (instance == null) {
             instance = new NewsRepository();
         }
         return instance;
     }
 
-    public void setNewsListCallback(NewsListCallback callback){
+    public void setNewsListCallback(NewsListCallback callback) {
         mNewsListCallback = callback;
     }
 
-    public void loadJson(String keyword){
+    public void loadJson(String keyword) {
         swipeCondition.setValue(false);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         String country = Utility.getCountry();
         String language = Utility.getLanguage();
 
         Call<News> call;
-        if(keyword.length() > 0){
-            call = apiInterface.getNewsSearch(keyword,language,"publishedAt",API_KEY);
-        }else{
-            call = apiInterface.getNews(country,API_KEY);
+        if (keyword.length() > 0) {
+            call = apiInterface.getNewsSearch(keyword, language, "publishedAt", API_KEY);
+        } else {
+            call = apiInterface.getNews(country, API_KEY);
         }
         call.enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {
-                if(response.isSuccessful() && response.body() != null){
+                if (response.isSuccessful() && response.body() != null) {
                     List<Articles> newsList = response.body().getArticles();
                     mNewsListCallback.setNews(newsList);
                     swipeCondition.setValue(true);
-                }else{
+                } else {
                     swipeCondition.setValue(false);
+                    String errorCode = "";
+                    switch (response.code()) {
+                        case 404:
+                            errorCode = "404 not found";
+                            break;
+                        case 500:
+                            errorCode = "500 server broken";
+                            break;
+                        default:
+                            errorCode = "Unknown error";
+                            break;
+                    }
+                    Log.d(COMMON_TAG,TAG+" errorCode response: "+errorCode);
                 }
             }
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Log.d(COMMON_TAG,TAG+" loadJson onFailure: "+t.getMessage());
+                Log.d(COMMON_TAG, TAG + " loadJson onFailure: " + t.getMessage());
                 swipeCondition.setValue(false);
             }
         });
     }
 
-    public LiveData<Boolean> getSwipeCondition(){
+    public LiveData<Boolean> getSwipeCondition() {
         return swipeCondition;
     }
+
 
 }

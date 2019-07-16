@@ -40,4 +40,6 @@ public class NewsViewModel extends AndroidViewModel implements NewsListCallback 
     public LiveData<Boolean> getSwipeCondition(){
         return mNewsRepository.getSwipeCondition();
     }
+
+
 }
