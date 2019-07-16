@@ -3,7 +3,6 @@ package com.example.newsapp_mvvm.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,15 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import com.example.newsapp_mvvm.R;
 import com.example.newsapp_mvvm.adapter.NewsRecyclerAdapter;
 import com.example.newsapp_mvvm.models.Articles;
 import com.example.newsapp_mvvm.viewmodel.NewsViewModel;
-
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;

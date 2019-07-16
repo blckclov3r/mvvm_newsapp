@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.newsapp_mvvm.R;
-import com.example.newsapp_mvvm.utils.Utility;
 import com.example.newsapp_mvvm.models.Articles;
+import com.example.newsapp_mvvm.utils.Utility;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
