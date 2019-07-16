@@ -8,6 +8,7 @@ import com.example.newsapp_mvvm.api.ApiInterface;
 import com.example.newsapp_mvvm.api.NewsListCallback;
 import com.example.newsapp_mvvm.models.Articles;
 import com.example.newsapp_mvvm.models.News;
+import com.example.newsapp_mvvm.models.Source;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class NewsRepository {
             public void onResponse(Call<News> call, Response<News> response) {
                 if(response.isSuccessful() && response.body() != null){
                     List<Articles> newsList = response.body().getArticles();
-                    Log.d(COMMON_TAG,TAG+" newsList: "+newsList.toString());
+
                     mNewsListCallback.setNews(newsList);
                 }
             }

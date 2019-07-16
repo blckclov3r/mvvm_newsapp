@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorBackground"
+    tools:context=".activities.NewsDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:theme="@style/MyAppBarLayoutTheme"
+        android:layout_height="250dp">
+
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/collapsing_toolbar"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                app:layout_collapseMode="parallax"
+                android:scaleType="fitXY"
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@drawable/top_shadow"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    android:src="@drawable/bottom_shadow"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="70dp" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/Theme.AppCompat.Light"
+                android:layout_height="?attr/actionBarSize">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:clickable="false"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title_on_appbar"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:text="News For You"
+                        android:maxLines="1"
+                        android:layout_width="wrap_content"
+                        android:textSize="17dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/subtitle_on_appbar"
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                        android:layout_width="wrap_content"
+                        android:text="Subtitle"
+                        android:textSize="13dp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content" />
+
+
+
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/colorBackground"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="7dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:text="Title of News"
+                    android:layout_width="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="19sp"
+                    android:textColor="@color/colorTextTitle"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="a time ago"
+                    android:maxLines="1"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_below="@id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="60dp"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/date_behavior"
+        app:layout_anchor="@+id/appbar"
+        app:behavior_autoHide="true"
+        android:adjustViewBounds="true"
+        app:layout_anchorGravity="right|end|bottom"
+        android:clickable="false"
+        android:background="@drawable/round_white"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            android:src="@drawable/ic_date"
+            android:layout_height="18dp" />
+
+        <TextView
+            android:textColor="#606060"
+            android:id="@+id/date"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="10dp"
+            android:text="01 January 1990"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
