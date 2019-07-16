@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:id="@+id/collapsing_toolbar"
             app:titleEnabled="false"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snapMargins"
             app:contentScrim="?attr/colorPrimary"
             android:layout_height="match_parent">
 
@@ -98,7 +98,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -171,7 +171,7 @@
         android:background="@drawable/round_white"
         android:layout_width="wrap_content"
         android:padding="5dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="wrap_content">
 
         <ImageView

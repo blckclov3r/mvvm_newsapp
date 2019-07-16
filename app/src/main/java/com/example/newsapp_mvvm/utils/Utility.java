@@ -1,4 +1,4 @@
-package com.example.newsapp_mvvm;
+package com.example.newsapp_mvvm.utils;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,9 +12,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class Utils {
+public class Utility {
 
-    private static final String TAG = "Utils";
+    private static final String TAG = "Utility";
     private static final String COMMON_TAG = "mAppLog";
 
     public static ColorDrawable[] vibrantLightColorList =

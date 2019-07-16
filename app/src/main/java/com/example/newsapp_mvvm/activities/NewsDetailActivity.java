@@ -13,10 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.newsapp_mvvm.R;
-import com.example.newsapp_mvvm.Utils;
+import com.example.newsapp_mvvm.utils.Utility;
 import com.example.newsapp_mvvm.models.Articles;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -67,7 +66,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
             initWebView(articles.getUrl());
             RequestOptions options = new RequestOptions()
-                    .error(Utils.getRandomDrawbleColor())
+                    .error(Utility.getRandomDrawbleColor())
                     .centerCrop();
             Glide.with(this)
                     .asBitmap()
@@ -78,7 +77,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
             mAppBar_title_tv.setText(source_name);
             mAppBar_subtitle_tv.setText(articles.getUrl());
-            mDate_tv.setText(Utils.DateFormat(articles.getPublishedAt()));
+            mDate_tv.setText(Utility.DateFormat(articles.getPublishedAt()));
             mTitle_tv.setText(articles.getTitle());
 
 
@@ -88,7 +87,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
             } else {
                 author = "";
             }
-            mTime_tv.setText(source_name + author + " \u2022 " + Utils.DateToTimeFormat(articles.getPublishedAt()));
+            mTime_tv.setText(source_name + author + " \u2022 " + Utility.DateToTimeFormat(articles.getPublishedAt()));
         }
     }
 

@@ -13,13 +13,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.newsapp_mvvm.R;
-import com.example.newsapp_mvvm.Utils;
+import com.example.newsapp_mvvm.utils.Utility;
 import com.example.newsapp_mvvm.models.Articles;
 
 import java.util.ArrayList;
@@ -65,8 +63,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
 
         RequestOptions options = new RequestOptions()
-                .placeholder(Utils.getRandomDrawbleColor())
-                .error(Utils.getRandomDrawbleColor())
+                .placeholder(Utility.getRandomDrawbleColor())
+                .error(Utility.getRandomDrawbleColor())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop();
 
@@ -91,11 +89,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
 
         holder.author_tv.setText(articles.getAuthor());
-        holder.publishedAt_tv.setText(Utils.DateToTimeFormat(articles.getPublishedAt()));
+        holder.publishedAt_tv.setText(Utility.DateToTimeFormat(articles.getPublishedAt()));
         holder.title_tv.setText(articles.getTitle());
         holder.desc_tv.setText(articles.getDescription());
         holder.source_tv.setText(articles.getSource().getName());
-        holder.time_tv.setText(" \u2022 "+Utils.DateToTimeFormat(articles.getPublishedAt()));
+        holder.time_tv.setText(" \u2022 "+ Utility.DateToTimeFormat(articles.getPublishedAt()));
     }
 
     @Override

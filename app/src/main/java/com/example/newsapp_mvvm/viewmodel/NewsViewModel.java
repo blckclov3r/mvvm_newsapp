@@ -36,4 +36,8 @@ public class NewsViewModel extends AndroidViewModel implements NewsListCallback 
     public void loadJson(String keyword){
         mNewsRepository.loadJson(keyword);
     }
+
+    public LiveData<Boolean> getSwipeCondition(){
+        return mNewsRepository.getSwipeCondition();
+    }
 }
