@@ -1,8 +1,13 @@
 package com.example.newsapp_mvvm.activities;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
@@ -27,6 +32,9 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
     private static final String TAG = "NewsDetailActivity";
     private static final String COMMON_TAG = "mAppLog";
+
+    private static String mUrl = "";
+    private static String mSourceName = "";
 
     private ImageView mImageView;
     private TextView mAppBar_title_tv, mAppBar_subtitle_tv, mDate_tv, mTime_tv, mTitle_tv;
@@ -64,6 +72,8 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
             Articles articles = getIntent().getParcelableExtra("articles");
             String source_name = getIntent().getStringExtra("source");
 
+            mSourceName = source_name;
+
             initWebView(articles.getUrl());
             RequestOptions options = new RequestOptions()
                     .error(Utility.getRandomDrawbleColor())
@@ -93,6 +103,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
 
     private void initWebView(String url){
+        mUrl = url;
         mWebView.loadUrl(url);
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.getSettings().setDomStorageEnabled(true);
@@ -134,5 +145,39 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
     public void onBackPressed() {
         super.onBackPressed();
         supportFinishAfterTransition();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_news,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.share){
+
+        }
+        if(item.getItemId() == R.id.web_view){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(mUrl));
+            startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.share){
+            try{
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plan");
+                intent.putExtra(Intent.EXTRA_SUBJECT, mSourceName);
+                String body = mTitle_tv.getText().toString()+"\n"+mUrl+"\n"+"Share from the NewsApp"+"\n";
+                intent.putExtra(Intent.EXTRA_TEXT,body);
+                startActivity(Intent.createChooser(intent,"Share with: "));
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e(COMMON_TAG,TAG+" exception: "+e.getMessage());
+                Toast.makeText(this, "Sorry, Unable to share", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

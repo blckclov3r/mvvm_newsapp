@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.newsapp_mvvm.R;
 import com.example.newsapp_mvvm.adapter.NewsRecyclerAdapter;
@@ -27,10 +26,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapter.OnItemClickInterface,SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapter.OnItemClickInterface, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "MainActivity";
-    private static final String COMMON_TAG= "mAppLog";
+    private static final String COMMON_TAG = "mAppLog";
+    private String mQuery = "";
 
     private RecyclerView mRecyclerView;
     private NewsRecyclerAdapter mRecyclerAdapter;
@@ -46,28 +46,27 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapt
         mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-
         mNewsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+
         mNewsViewModel.loadJson("");
+        initRecycler();
         mNewsViewModel.getNewsList().observe(this, new Observer<List<Articles>>() {
             @Override
             public void onChanged(List<Articles> articles) {
-                Log.d(COMMON_TAG,TAG+" onChanged");
+                Log.d(COMMON_TAG, TAG + " onChanged");
                 mRecyclerAdapter.setArticlesList(articles);
             }
         });
 
-        initRecycler();
+
+
+
 
         mNewsViewModel.getSwipeCondition().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Log.d(COMMON_TAG,TAG+" aBoolean: "+aBoolean);
-                if(!aBoolean) {
-                    mSwipeRefreshLayout.setRefreshing(true);
-                }else{
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+                Log.d(COMMON_TAG, TAG + " aBoolean: " + aBoolean);
+                mSwipeRefreshLayout.setRefreshing(!aBoolean);
             }
         });
     }
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapt
         super.onStart();
     }
 
-    private void initRecycler(){
+    private void initRecycler() {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerAdapter = new NewsRecyclerAdapter();
         mRecyclerAdapter.setOnItemClickInterface(this);
@@ -89,29 +88,30 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapt
     @Override
     public void onItemClick(View view, int position) {
         ImageView imageView = view.findViewById(R.id.news_imageView);
-        Log.d(COMMON_TAG,TAG+" position: "+position);
+        Log.d(COMMON_TAG, TAG + " position: " + position);
         Articles articles = mRecyclerAdapter.getArticlesList().get(position);
 
 
-        Intent intent = new Intent(MainActivity.this,NewsDetailActivity.class);
-        intent.putExtra("articles",articles);
-        intent.putExtra("source",articles.getSource().getName());
+        Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
+        intent.putExtra("articles", articles);
+        intent.putExtra("source", articles.getSource().getName());
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        super.onBackPressed();
     }
 
-    public void onLoadingSwipeRefresh(String keyword){
+    public void onLoadingSwipeRefresh(String keyword) {
         mNewsViewModel.loadJson(keyword);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
+        inflater.inflate(R.menu.menu_main, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
@@ -122,26 +122,32 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerAdapt
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(query.length() > 2){
-                     onLoadingSwipeRefresh(query);
-                }else{
-                    Toast.makeText(MainActivity.this, "Type more than 2 letters", Toast.LENGTH_SHORT).show();
-                }
+                mQuery = query;
+                onLoadingSwipeRefresh(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                mQuery = newText;
                 return false;
             }
         });
 
-        searchMenuItem.getIcon().setVisible(false,false);
+        searchMenuItem.getIcon().setVisible(false, false);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public void onRefresh() {
-        mNewsViewModel.loadJson("");
+        mNewsViewModel.loadJson(mQuery);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.exit){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

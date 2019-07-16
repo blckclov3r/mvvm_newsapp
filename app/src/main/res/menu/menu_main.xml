@@ -8,7 +8,7 @@
         app:showAsAction="always|collapseActionView"
         />
     <item
-        android:id="@+id/options"
+        android:id="@+id/exit"
         android:title="Exit"
         app:showAsAction="never"/>
 </menu>
