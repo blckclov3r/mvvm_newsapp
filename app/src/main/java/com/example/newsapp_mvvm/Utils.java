@@ -2,6 +2,7 @@ package com.example.newsapp_mvvm;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -12,6 +13,10 @@ import java.util.Locale;
 import java.util.Random;
 
 public class Utils {
+
+    private static final String TAG = "Utils";
+    private static final String COMMON_TAG = "mAppLog";
+
     public static ColorDrawable[] vibrantLightColorList =
             {
                     new ColorDrawable(Color.parseColor("#ffeead")),
